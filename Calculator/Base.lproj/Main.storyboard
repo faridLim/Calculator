@@ -222,7 +222,7 @@
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="isRound" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="tabMinBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kGO-Pw-itj"/>
+                                                            <action selector="tabSubBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WAR-54-wRc"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -300,7 +300,6 @@
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="tabAddBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wxi-Pj-DaR"/>
-                                                            <action selector="tabPluBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="oET-TV-ZZv"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>

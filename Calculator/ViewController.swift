@@ -16,9 +16,9 @@ enum Operator{
 }
 
 class ViewController: UIViewController {
-
+    
     @IBOutlet weak var numOutputLabel: UILabel!
-   
+    
     //계산기에 숫자를 누를때마다 OutputLabel에 표시되는 숫자
     var disPlayNum = ""
     //이전 계산값을 저장 (첫 번째 피연산자)
@@ -34,14 +34,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
+    
     @IBAction func tapNumBtn(_ sender: UIButton) {
         //선택한 버튼의 타이틀을 가져옴 (옵셔널 타입이기에 옵셔널 바인딩 수행)
         guard let numValue = sender.title(for: .normal) else {return}
         // numValue값을 disPlayNum 프로퍼티에 넘겨줄 건데, 9자리가 넘지 않도록 함
         if self.disPlayNum.count < 9 {
             self.disPlayNum += numValue
-            self.numOutputLabel.text  = self.disPlayNum 
+            self.numOutputLabel.text  = self.disPlayNum
         }
     }
     
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         self.firstOperand = ""
         self.secondOperand = ""
         self.result = ""
-        self.currentOperation = .Unknown
+        self.currentOperation = Operator.Unknown
         self.numOutputLabel.text = "0"
     }
     
@@ -63,18 +63,63 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tabDivBtn(_ sender: UIButton) {
+        self.operation(_operator: Operator.Divide)
     }
     
     @IBAction func tabMulBtn(_ sender: UIButton) {
+        self.operation(_operator: Operator.Multiply)
     }
     
     @IBAction func tabSubBtn(_ sender: UIButton) {
+        self.operation(_operator:Operator.Subtract)
     }
     
     @IBAction func tabAddBtn(_ sender: UIButton) {
+        self.operation(_operator: Operator.Add)
     }
     
     @IBAction func tabEqualBtn(_ sender: UIButton) {
+        self.operation(_operator: self.currentOperation)
+    }
+    //계산을 수행하는 함수
+    func operation(_operator : Operator){
+        if self.currentOperation != .Unknown{
+            if !self.disPlayNum.isEmpty{
+                self.secondOperand = self.disPlayNum
+                self.disPlayNum = ""
+                
+                guard let firstOperand = Double(self.firstOperand) else {return}
+                guard let secondOperand = Double(self.secondOperand) else {return}
+                
+                switch self.currentOperation{
+                case .Add:
+                    self.result = "\(firstOperand + secondOperand)"
+                case .Subtract:
+                    self.result = "\(firstOperand - secondOperand)"
+                case .Divide:
+                    self.result = "\(firstOperand / secondOperand)"
+                case .Multiply:
+                    self.result = "\(firstOperand * secondOperand)"
+                    
+                default : break
+                }
+                if let result = Double(self.result) , result.truncatingRemainder(dividingBy: 1) == 0{
+                    self.result = "\(Int(result))"
+                }
+                
+                self.firstOperand = self.result
+                self.numOutputLabel.text = self.result
+            }
+            //누적연산을 하기위함
+            self.currentOperation = _operator
+            
+        }else {
+            self.firstOperand = self.disPlayNum
+            self.currentOperation = _operator
+            self.disPlayNum = "" }
+        
+        
+        
     }
 }
 
